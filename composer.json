@@ -1,0 +1,25 @@
+{
+    "name": "kelunik/link-header-rfc5988",
+    "description": "RFC 5988 compatible link header parser.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Niklas Keller",
+            "email": "me@kelunik.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Kelunik\\LinkHeaderRfc5988\\": "src"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6",
+        "friendsofphp/php-cs-fixer": "^2.3"
+    }
+}
