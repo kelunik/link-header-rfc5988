@@ -17,6 +17,7 @@ class ParseTest extends TestCase {
         $this->assertSame("previous chapter", $link->getParam("title"));
         $this->assertInstanceOf(Link::class, $links->getByRel("previous"));
         $this->assertNull($links->getByRel("next"));
+        $this->assertCount(0, $links->getAllByRel("next"));
     }
 
     public function testRfc5988Example2() {
@@ -28,6 +29,7 @@ class ParseTest extends TestCase {
         $this->assertSame("http://example.net/foo", $link->getParam("rel"));
         $this->assertInstanceOf(Link::class, $links->getByRel("http://example.net/foo"));
         $this->assertNull($links->getByRel("foobar"));
+        $this->assertCount(0, $links->getAllByRel("foobar"));
     }
 
     public function testRfc5988Example3() {
@@ -48,6 +50,7 @@ class ParseTest extends TestCase {
         $this->assertInstanceOf(Link::class, $links->getByRel("previous"));
         $this->assertInstanceOf(Link::class, $links->getByRel("next"));
         $this->assertNull($links->getByRel("foobar"));
+        $this->assertCount(0, $links->getAllByRel("foobar"));
     }
 
     public function testRfc5988Example4() {
@@ -60,5 +63,23 @@ class ParseTest extends TestCase {
         $this->assertInstanceOf(Link::class, $links->getByRel("http://example.net/relation/other"));
         $this->assertInstanceOf(Link::class, $links->getByRel("start"));
         $this->assertNull($links->getByRel("foobar"));
+        $this->assertCount(0, $links->getAllByRel("foobar"));
+    }
+
+    public function linkParamsProvider() {
+        return [
+            ["http://example.com", 0],
+            ["[http://example.org/]; rel=\"start http://example.net/relation/other\"", 0],
+            ["<http://example.org/>; rel==\"start http://example.net/relation/other\"", 1],
+        ];
+    }
+
+    /**
+     * @dataProvider linkParamsProvider
+     */
+    public function testParseLinksOnLinkParams($link, $expectedCount) {
+        $links = parseLinks($link);
+
+        $this->assertCount($expectedCount, $links->getAll());
     }
 }
