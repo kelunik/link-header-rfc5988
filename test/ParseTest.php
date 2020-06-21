@@ -3,8 +3,8 @@
 namespace Kelunik\LinkHeaderRfc5988\Test;
 
 use Kelunik\LinkHeaderRfc5988\Link;
-use PHPUnit\Framework\TestCase;
 use function Kelunik\LinkHeaderRfc5988\parseLinks;
+use PHPUnit\Framework\TestCase;
 
 class ParseTest extends TestCase {
     public function testRfc5988Example1() {
